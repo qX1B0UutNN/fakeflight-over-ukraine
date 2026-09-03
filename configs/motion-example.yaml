@@ -1,0 +1,32 @@
+version: 1
+
+speed_mps: 45.0
+camera_fps: 1.0
+altitude_m: 360.0
+
+orientation_deg:
+  yaw: 0.0
+  pitch: 40.0
+  roll: 0.0
+
+orientation_oscillation:
+  amplitude_deg:
+    yaw: 1.0
+    pitch: 2.0
+    roll: 2.0
+  frequency_hz:
+    yaw: 0.08
+    pitch: 0.12
+    roll: 0.10
+
+position_oscillation:
+  amplitude_m:
+    forward: 0.5
+    right: 0.5
+    up: 0.2
+  frequency_hz:
+    forward: 0.05
+    right: 0.07
+    up: 0.09
+
+random_seed: 42

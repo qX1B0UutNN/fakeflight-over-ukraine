@@ -1,0 +1,16 @@
+version: 1
+
+image:
+  width_px: 1920
+  height_px: 1080
+
+sensor:
+  width_mm: 13.2
+  height_mm: 7.425
+
+lens:
+  focal_length_x_mm: 8.8
+  focal_length_y_mm: 8.8
+  skew_px: 0.0
+  principal_point_x_px: null
+  principal_point_y_px: null
