@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fakeflight.local/schemas/camera-config-v1.schema.json",
+  "title": "FakeFlight camera configuration version 1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "image", "sensor", "lens"],
+  "properties": {
+    "version": {
+      "const": 1,
+      "description": "Camera configuration format version."
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width_px", "height_px"],
+      "properties": {
+        "width_px": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Rendered image width in pixels."
+        },
+        "height_px": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Rendered image height in pixels."
+        }
+      }
+    },
+    "sensor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width_mm", "height_mm"],
+      "properties": {
+        "width_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Physical sensor width in millimetres."
+        },
+        "height_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Physical sensor height in millimetres."
+        }
+      }
+    },
+    "lens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["focal_length_x_mm", "focal_length_y_mm"],
+      "properties": {
+        "focal_length_x_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Horizontal focal length in millimetres."
+        },
+        "focal_length_y_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Vertical focal length in millimetres."
+        },
+        "skew_px": {
+          "type": "number",
+          "default": 0.0,
+          "description": "Image-axis skew in pixels."
+        },
+        "principal_point_x_px": {
+          "type": ["number", "null"],
+          "default": null,
+          "description": "Principal point X coordinate, or null for image centre."
+        },
+        "principal_point_y_px": {
+          "type": ["number", "null"],
+          "default": null,
+          "description": "Principal point Y coordinate, or null for image centre."
+        }
+      }
+    }
+  }
+}

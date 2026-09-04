@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fakeflight.local/schemas/motion-config-v1.schema.json",
+  "title": "FakeFlight motion configuration version 1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "speed_mps", "camera_fps", "altitude_m"],
+  "properties": {
+    "version": {
+      "const": 1,
+      "description": "Motion configuration format version."
+    },
+    "speed_mps": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Base flight speed in metres per second."
+    },
+    "camera_fps": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Camera sampling rate in frames per second."
+    },
+    "altitude_m": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Base altitude above the flat ground plane in metres."
+    },
+    "orientation_deg": {
+      "$ref": "#/$defs/orientation_axes"
+    },
+    "orientation_oscillation": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/orientation_oscillation"}
+      ],
+      "default": null
+    },
+    "position_oscillation": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/position_oscillation"}
+      ],
+      "default": null
+    },
+    "random_seed": {
+      "type": "integer",
+      "default": 0,
+      "description": "Seed used to generate deterministic oscillation phases."
+    }
+  },
+  "$defs": {
+    "orientation_axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "yaw": {"type": "number", "default": 0.0},
+        "pitch": {"type": "number", "default": 0.0},
+        "roll": {"type": "number", "default": 0.0}
+      }
+    },
+    "position_axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "forward": {"type": "number", "default": 0.0},
+        "right": {"type": "number", "default": 0.0},
+        "up": {"type": "number", "default": 0.0}
+      }
+    },
+    "orientation_frequency_axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "yaw": {"type": "number", "minimum": 0, "default": 0.0},
+        "pitch": {"type": "number", "minimum": 0, "default": 0.0},
+        "roll": {"type": "number", "minimum": 0, "default": 0.0}
+      }
+    },
+    "position_frequency_axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "forward": {"type": "number", "minimum": 0, "default": 0.0},
+        "right": {"type": "number", "minimum": 0, "default": 0.0},
+        "up": {"type": "number", "minimum": 0, "default": 0.0}
+      }
+    },
+    "orientation_oscillation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "amplitude_deg": {"$ref": "#/$defs/orientation_axes"},
+        "frequency_hz": {"$ref": "#/$defs/orientation_frequency_axes"}
+      }
+    },
+    "position_oscillation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "amplitude_m": {"$ref": "#/$defs/position_axes"},
+        "frequency_hz": {"$ref": "#/$defs/position_frequency_axes"}
+      }
+    }
+  }
+}
