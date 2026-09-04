@@ -1,0 +1,14 @@
+coolname==5.0.0
+fire==0.6.0
+jsonschema==4.23.0
+numpy==2.0.0
+opencv-python-headless==4.10.0.84
+pillow==10.4.0
+PyYAML==6.0.2
+rasterio==1.5.1
+referencing==0.35.1
+tqdm==4.66.4
+
+
+-e git+ssh://git@github.com/IlliaOvcharenko/logkit.git@2eb36ba27ab10d5d74e995afa1ea991b6dd028a4#egg=logkit
+-e git+ssh://git@github.com/IlliaOvcharenko/geo-gremlin.git@ebb270496c0fcc275b2273e3ef8ac597b4855951#egg=geo_gremlin
