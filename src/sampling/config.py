@@ -9,6 +9,8 @@ from typing import Any
 import numpy as np
 import yaml
 
+from schema_validation import validate_schema
+
 
 AXES = ("yaw", "pitch", "roll")
 POSITION_AXES = ("forward", "right", "up")
@@ -53,8 +55,7 @@ def load_camera_config(
 ) -> tuple[dict[str, Any], dict[str, Any], np.ndarray]:
     """Load a camera config and calculate its intrinsic matrix."""
     config = load_yaml(path)
-    if config.get("version") != 1:
-        raise ValueError("Camera config version must be 1")
+    validate_schema(config, "camera-config-v1.schema.json", "camera config")
 
     try:
         image = config["image"]
@@ -101,8 +102,7 @@ def load_camera_config(
 def load_motion_config(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     """Load and normalize a motion config."""
     config = load_yaml(path)
-    if config.get("version") != 1:
-        raise ValueError("Motion config version must be 1")
+    validate_schema(config, "motion-config-v1.schema.json", "motion config")
 
     random_seed = config.get("random_seed", 0)
     if isinstance(random_seed, bool) or not isinstance(random_seed, int):

@@ -13,6 +13,8 @@ from typing import Any
 import numpy as np
 from coolname import generate
 
+from schema_validation import validate_schema
+
 
 REGISTRY_FIELDS = (
     "run_name",
@@ -74,7 +76,7 @@ def build_metadata(
     frames: list[dict[str, Any]],
 ) -> dict[str, Any]:
     """Build complete, reproducible metadata for one rendering run."""
-    return {
+    metadata = {
         "schema_version": 2,
         "run_name": run_name,
         "rendered_at": rendered_at,
@@ -104,6 +106,8 @@ def build_metadata(
         },
         "frames": frames,
     }
+    validate_schema(metadata, "meta-v2.schema.json", "render metadata")
+    return metadata
 
 
 def registry_row(metadata: dict[str, Any]) -> dict[str, Any]:

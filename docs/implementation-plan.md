@@ -115,6 +115,30 @@ K = [[fx_px, skew_px, cx_px],
      [0,     0,       1]]
 ```
 
+The machine-readable format is defined by
+`schemas/camera-config-v1.schema.json`.
+
+A camera config can also be generated from the active sensor dimensions and
+either a diagonal field of view or a 36 x 24 mm full-frame-equivalent focal
+length:
+
+```bash
+python scripts/generate_camera_config.py configs/camera-fov.yaml \
+  --width_px=1920 --height_px=1080 \
+  --sensor_width_mm=13.2 --sensor_height_mm=7.425 \
+  --diagonal_fov_deg=84
+
+python scripts/generate_camera_config.py configs/camera-equivalent.yaml \
+  --width_px=1920 --height_px=1080 \
+  --sensor_width_mm=13.2 --sensor_height_mm=7.425 \
+  --full_frame_focal_length_mm=24
+```
+
+Pass exactly one lens specification. Sensor dimensions must describe the active
+sensor area used by the output image, including any crop. The generator writes
+the calculated physical focal length to both lens axes and refuses to overwrite
+an existing file.
+
 ## 5. Motion Configuration
 
 Motion configurations replace the former movement configurations:
@@ -138,6 +162,21 @@ random_seed: 42
 
 Optional orientation and position oscillations are sinusoids. Their initial
 phases come from `random_seed`, so runs with identical inputs are deterministic.
+The machine-readable format is defined by
+`schemas/motion-config-v1.schema.json`.
+
+Both config types can be checked without starting a render:
+
+```bash
+python scripts/validate_config.py configs/camera-example.yaml
+python scripts/validate_config.py configs/motion-example.yaml
+```
+
+The command normally detects the config type. Use `--config_type=camera` or
+`--config_type=motion` when validating an incomplete file that cannot be
+identified. JSON Schema checks fields, types, ranges, and unknown keys. Python
+validation additionally checks finite numbers and relationships between fields,
+such as whether the principal point lies inside the image.
 
 ## 6. Coordinates and Camera Pose
 
@@ -191,6 +230,11 @@ Every run has one `meta.json` with schema version 2. It includes:
 
 Config contents are copied into metadata so a run remains reproducible if its
 original YAML files are changed or lost.
+
+The complete metadata contract is defined by `schemas/meta-v2.schema.json`.
+Generated metadata is validated against it before being written. The metadata
+schema references the camera and motion schemas for the copied config values,
+so producers and consumers use the same versioned definitions.
 
 ## 10. Render Registry
 
