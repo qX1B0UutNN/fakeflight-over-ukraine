@@ -9,8 +9,8 @@ from pathlib import Path
 
 import cv2
 import fire
-from logkit.core import add_handlers, get_logger
-from logkit.handlers import DefaultConsoleHandler
+from logkittt.core import add_handlers, get_logger
+from logkittt.handlers import DefaultConsoleHandler
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))

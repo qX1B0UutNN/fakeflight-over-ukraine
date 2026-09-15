@@ -8,8 +8,8 @@ from pathlib import Path
 
 import fire
 import yaml
-from logkit.core import add_handlers, get_logger
-from logkit.handlers import DefaultConsoleHandler
+from logkittt.core import add_handlers, get_logger
+from logkittt.handlers import DefaultConsoleHandler
 
 
 FULL_FRAME_WIDTH_MM = 36.0

@@ -47,10 +47,7 @@ Run the following commands from the repository root.
 2. Merge the tiles into a georeferenced orthophoto:
 
    ```bash
-   ./scripts/merge_pngs.sh \
-     dataset/location/kharkiv-saltivka/ortho/google_19/ \
-     "$(pwd)/dataset/location/kharkiv-saltivka/ortho/google_19.tif" \
-     EPSG:3857
+   geo-gremlin merge-wms-tiles dataset/location/kharkiv-saltivka/ortho/google_19/
    ```
 
 3. Render trajectory `0` and save a preview video:
